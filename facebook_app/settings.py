@@ -38,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+
     'users',
 ]
 
@@ -56,7 +62,7 @@ ROOT_URLCONF = 'facebook_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,8 +83,12 @@ WSGI_APPLICATION = 'facebook_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'facebook_django_app',
+        'USER': 'facebook_django_app',
+        'PASSWORD': 'test',
+        'HOST': 'localhost',
+        'PORT': 5432,
     }
 }
 
@@ -101,6 +111,34 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', ],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+        ],
+        'EXCHANGE_TOKEN': True,  # Make long-lived access token
+        'VERIFIED_EMAIL': False,
+        'LOCALE_FUNC': lambda request: 'en_US',
+        'VERSION': 'v2.4',
+    }
+}
+
+SOCIAL_AUTH_FACEBOOK_KEY = '617501445434265'
+SOCIAL_AUTH_FACEBOOK_SECRET = '08e010f3c6d52c6658af1552fa4a077f'  # app key
+
+LOGIN_REDIRECT_URL = "/"
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
