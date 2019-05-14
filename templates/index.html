@@ -4,10 +4,10 @@
     {% load socialaccount %}
     {% providers_media_js %}
     <div class="row h-100">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto text-center">
             {% if user.is_authenticated %}
-                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-                {{user.socialaccount_set.all.0.extra_data.name}}
+                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="rounded mx-auto d-block img-thumbnail" />
+                <h1>{{user.socialaccount_set.all.0.extra_data.name}}</h1>
             {% else %}
                 <a href="{% provider_login_url "facebook" method="js_sdk" %}" class="btn btn-block btn-social btn-facebook" style="background-color:#3b5998;text-align:center">
                 <span class="fab fa-facebook-square"></span>
