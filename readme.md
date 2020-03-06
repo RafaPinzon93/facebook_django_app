@@ -7,6 +7,8 @@ Clone or download the project
 git clone https://github.com/RafaPinzon93/facebook_django_app.git
 ```
 
+test_ssh
+
 ### Configure
 Using python 3.7
 1. Create a python virtual environment ```python -m venv virtual_env```
